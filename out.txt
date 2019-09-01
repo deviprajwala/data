@@ -1,0 +1,12 @@
+Enter the number of days
+Enter the available data
+Enter the profile of system
+The matrix is
+0 0 0 0 0 
+0 10 10 10 10 
+0 10 10 10 10 
+0 10 10 17 17 
+0 10 10 17 24 
+Optimal solution is 24
+Composition is 7 7 0 10 
+Zero indicates that the system is rebooted 

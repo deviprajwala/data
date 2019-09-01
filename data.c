@@ -1,0 +1,122 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void input(int x[50],int s[50],int n);
+void print(int matrix[50][50],int n,int count);
+void init(int matrix[50][50],int n);
+int max(int x[50],int s[50],int i);
+void comp(int matrix[50][50],int n);
+int check(int matrix[50][50],int y[50],int s[50],int i,int count);
+
+void main()
+{
+  int x[50],s[50],matrix[50][50],n,i,j,c,count=0;
+  printf("Enter the number of days\n");
+  scanf("%d",&n);
+  input(x,s,n);
+  init(matrix,n);
+
+  for(i=1;i<=n;i++)
+  {    
+       for(j=1;j<=n;j++)
+     {
+       if(i==j)
+       {
+         c=max(x,s,i);
+         if(matrix[i-1][i-1]-matrix[i-2][i-2]==x[i-1]&&c==x[i])
+           {
+              matrix[i][j]=matrix[i-1][j]+c;
+           }
+         else if(matrix[i-1][i-1]-matrix[i-2][i-2]==s[i-1]&&c==s[i])
+           {
+              matrix[i][j]=matrix[i-1][j]+c;
+           }
+         else if(matrix[i-1][i-1]-matrix[i-2][i-2]==s[i-1]&&c==x[i])
+           {
+              matrix[i][j]=matrix[i-1][j];
+           }
+         else if(matrix[i-1][i-1]-matrix[i-2][i-2]==x[i-1]&&c==s[i])
+           {
+              matrix[i][j]=matrix[i-1][j];
+           }
+         else if(matrix[i-1][i-1]-matrix[i-2][i-2]==0)
+           {
+              matrix[i][j]=matrix[i-1][j]+c;
+           }
+       }
+       else if(i>j)
+       {
+         matrix[i][j]=matrix[i-1][j];
+       }
+       else if(i<j)
+       {
+         matrix[i][j]=matrix[i][j-1];
+       }
+     }       
+  }
+  print(matrix,n,count);
+}
+
+void input(int x[50],int s[50],int n)
+{
+ int i;
+ printf("Enter the available data\n");
+ for(i=1;i<=n;i++)
+ {
+  scanf("%d",&x[i]);
+ }
+ printf("Enter the profile of system\n");
+ for(i=1;i<=n;i++)
+ {
+  scanf("%d",&s[i]);
+ }
+}
+void print(int matrix[50][50],int n,int count)
+{
+ int i,j,s;
+ printf("The matrix is\n");
+ for(i=0;i<=n;i++)
+ {
+  for(j=0;j<=n;j++)
+  {
+  printf("%d ",matrix[i][j]);
+  }
+  printf("\n");
+ }
+ printf("Optimal solution is %d\n",matrix[n][n]);
+ printf("Composition is ");
+ comp(matrix,n);
+ printf("\nZero indicates that the system is rebooted \n");
+}
+void init(int matrix[50][50],int n)
+{
+int i;
+for(i=0;i<=n;i++)
+ {
+  matrix[0][i]=0;
+  matrix[i][0]=0;
+ }
+}
+int max(int a[50],int b[50],int i)
+{
+ if(a[i]>b[i])
+ {
+  return a[i];
+ }
+ else 
+ {
+  return b[i];
+ }
+}
+void comp(int matrix[50][50],int n)
+{
+  int a;
+  if(matrix[n][n]>=matrix[n][n-1]&&n>0)
+  {
+   a=matrix[n][n]-matrix[n][n-1];
+   printf("%d ",a);
+   n--;
+   comp(matrix,n);
+  }
+}
+
